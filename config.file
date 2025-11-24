@@ -1,0 +1,42 @@
+# Photo Tool Configuration File
+# Format: key = value
+
+# Base path
+BasePath="%USERPROFILE%\Desktop\Semi-Automation"
+
+# Default folders
+Folder-1 = "%BasePath%\Resized"
+Folder-2 = "%BasePath%\Cropped"
+Folder-3 = "/uploads"
+
+# IrfanView installation path
+IrfanViewPath="%BasePath%\Tools\iview473_x64\i_view64.exe"
+
+# WinSCP path
+ WinSCPPath_COM = "%BasePath%\Tools\WinSCP-6.5.5-Portable\WinSCP.com"
+ WinSCPPath_EXE = "%BasePath%\Tools\WinSCP-6.5.5-Portable\WinSCP.exe"
+
+
+# Cardpresso Configuration
+CardpressoMasterFile = "%BasePath%\Master.xlsx"
+CardpressoCSVFile = "%BasePath%\CardPresso.csv"
+CardpressoExePath = "%BasePath%\Tools\cardPresso1.7.130\CardPresso.exe"
+CardpressoSheetName = ""
+CardpressoPhotoBaseDir = "Cropped"
+
+
+# Image processing settings
+ResizeWidth = 800
+OutputFormat = "jpg"
+Quality = 85
+
+# Microsoft Face API Configuration
+FaceAPIKey = "FACEAPIKEY"
+FaceAPIEndpoint = "https://face-api-for-crop.cognitiveservices.azure.com/"
+
+# SFTP Upload Configuration
+SFTPHost = "192.168.88.42"
+SFTPUsername = "sftpuser"
+SFTPRemotePath = "/uploads"
+# Note: Password will be stored securely using Windows Credential Manager
+
