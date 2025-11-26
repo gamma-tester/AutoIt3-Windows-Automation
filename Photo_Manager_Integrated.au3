@@ -539,7 +539,7 @@ Func _DetectFacesInPreview($sImagePath)
         
         ; Enable manual selection as fallback
         GUICtrlSetState($manualSelectBtn, $GUI_ENABLE)
-        _ShowStatus("No internet connection - use Manual Face Select to choose face area", 0)
+        _ShowStatus("No Auto Face detection available - use Manual Face Select to choose face area", 0)
         Return
     EndIf
 
