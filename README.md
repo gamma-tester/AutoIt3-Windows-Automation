@@ -97,8 +97,8 @@ Semi-Automation/
 └── Tools/                             # Required external tools
     ├── autoit-v3/                     # AutoIt3 runtime and libraries
     ├── iview473_x64/                  # IrfanView portable installation
-    └── cardPresso1.7.130/             # CardPresso portable installation
-```
+    ├── cardPresso1.7.130/             # CardPresso portable installation
+    └── WinSCP-6.5.5-Portable/         # WinSCP portable installation
 
 ## Installation & Setup
 
@@ -108,8 +108,8 @@ Semi-Automation/
 - **IrfanView** (included in Tools/iview473_x64/)
 - **CardPresso** (included in Tools/cardPresso1.7.130/)
 - **WinSCP** (portable version recommended)
-- **Microsoft Excel** (for client database management)
-- **Internet Connection** (for Microsoft Face API)
+- **Microsoft Excel** Or Libre Office Calc (for client database management)
+- **Internet Connection** (for Microsoft Face API), If No API falls back to manual selection
 
 ### Setup Instructions
 
