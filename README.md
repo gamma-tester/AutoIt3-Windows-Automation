@@ -10,7 +10,7 @@ The integrated application [`Photo_Manager_Integrated.au3`](Photo_Manager_Integr
 
 For immediate use, download and extract the **"Semi-Automation.zip"** package:
 
-1. **Download** the [Semi-Automation.zip](https://github.com/gamma-tester/AutoIt3-Windows-Automation/raw/refs/heads/main/Semi-Automation.zip?download=) file
+1. **Download** the [Semi-Automation.zip](https://github.com/gamma-tester/AutoIt3-Windows-Automation/raw/refs/heads/main/Semi-Automation.zip?download=) file, Configure your Face API key at # Microsoft Face API Configuration in [`config.file`](config.file)
 2. **Extract** to your Desktop (folder name must be "Semi-Automation")
 3. **Run** the application:
    - Double-click `Photo_Manager_Integrated.exe` (if compiled)
