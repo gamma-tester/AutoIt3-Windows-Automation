@@ -516,30 +516,24 @@ Func _DetectFacesInPreview($sImagePath)
         Local $iError = @error
         ConsoleWrite("Face API Error: " & $iError & @CRLF)
 
-        ; Enhanced error handling with specific messages
-        Switch $iError
-            Case 1
-                ; Enhanced error message with specific troubleshooting steps
-                Local $sErrorMessage = "Invalid API Key or Endpoint." & @CRLF & @CRLF & _
-                                      "Please check:" & @CRLF & _
-                                      "1. API Key in config.file is correct" & @CRLF & _
-                                      "2. Endpoint URL in config.file is correct" & @CRLF & _
-                                      "3. Azure Face API service is active" & @CRLF & _
-                                      "4. API quota has not been exceeded" & @CRLF & @CRLF & _
-                                      "Current Endpoint: " & $sFaceAPIEndpoint & @CRLF & _
-                                      "API Key length: " & StringLen($sFaceAPIKey) & " characters"
-                MsgBox(16, "API Error", $sErrorMessage)
-            Case 2, 5, 7
-                MsgBox(16, "No Internet Connection", "No internet connection detected." & @CRLF & "Face API requires an active internet connection." & @CRLF & @CRLF & "Please:" & @CRLF & "1. Check your internet connection" & @CRLF & "2. Connect to the internet and try again" & @CRLF & "3. Or use Manual Face Select to choose face area manually" & @CRLF & @CRLF & "Using manual face selection instead.")
-            Case 3
-                MsgBox(16, "File Error", "Could not read the image file." & @CRLF & "Please check if the file exists and is accessible." & @CRLF & @CRLF & "Using manual face selection instead.")
-            Case 4
-                MsgBox(16, "Header Error", "Failed to set API headers." & @CRLF & "Please check your Face API configuration." & @CRLF & @CRLF & "Using manual face selection instead.")
-            Case 6
-                MsgBox(16, "HTTP Error", "Face API returned HTTP error." & @CRLF & "Please check your API quota and endpoint URL." & @CRLF & @CRLF & "Using manual face selection instead.")
-            Case Else
-                MsgBox(16, "Unknown Error", "Failed to call Face API. Error code: " & $iError & @CRLF & @CRLF & "Using manual face selection instead.")
-        EndSwitch
+        ; Unified error handling for all FaceAPI issues
+        If $iError >= 1 And $iError <= 7 Then
+            ; All FaceAPI related errors (network, API key, endpoint, etc.)
+            MsgBox(16, "Face API Error", "Face API service unavailable." & @CRLF & @CRLF & _
+                                  "Possible causes:" & @CRLF & _
+                                  "• No internet connection" & @CRLF & _
+                                  "• Wrong API key" & @CRLF & _
+                                  "• Wrong endpoint URL" & @CRLF & _
+                                  "• API service down" & @CRLF & @CRLF & _
+                                  "Please verify:" & @CRLF & _
+                                  "1. Your internet connection" & @CRLF & _
+                                  "2. API key and endpoint in config.file" & @CRLF & _
+                                  "3. Azure Face API service status" & @CRLF & @CRLF & _
+                                  "Using manual face selection instead.")
+        Else
+            ; Other non-API errors
+            MsgBox(16, "Error", "Failed to call Face API. Error code: " & $iError & @CRLF & @CRLF & "Using manual face selection instead.")
+        EndIf
 
         _ShowStatus("No internet connection - use Manual Face Select", 0)
         
@@ -763,14 +757,23 @@ Func _DetectAndCropFace($sImagePath, $sOutputPath)
         Local $iError = @error
         ConsoleWrite("Face API Error: " & $iError & @CRLF)
 
-        If $iError = 1 Then
-            MsgBox(16, "API Error", "Invalid API Key or Endpoint." & @CRLF & "Please check your Azure credentials.")
-        ElseIf $iError = 2 Then
-            MsgBox(16, "Network Error", "Could not connect to Microsoft Face API." & @CRLF & "Using center crop instead.")
-        ElseIf $iError = 3 Then
-            MsgBox(16, "API Feature Error", "Face API feature not available." & @CRLF & "Using center crop instead.")
+        ; Unified error handling for all FaceAPI issues
+        If $iError >= 1 And $iError <= 7 Then
+            ; All FaceAPI related errors (network, API key, endpoint, etc.)
+            MsgBox(16, "Face API Error", "Face API service unavailable." & @CRLF & @CRLF & _
+                                  "Possible causes:" & @CRLF & _
+                                  "• No internet connection" & @CRLF & _
+                                  "• Wrong API key" & @CRLF & _
+                                  "• Wrong endpoint URL" & @CRLF & _
+                                  "• API service down" & @CRLF & @CRLF & _
+                                  "Please verify:" & @CRLF & _
+                                  "1. Your internet connection" & @CRLF & _
+                                  "2. API key and endpoint in config.file" & @CRLF & _
+                                  "3. Azure Face API service status" & @CRLF & @CRLF & _
+                                  "Using center crop instead.")
         Else
-            MsgBox(16, "Error", "Failed to call Face API. Error code: " & $iError)
+            ; Other non-API errors
+            MsgBox(16, "Error", "Failed to call Face API. Error code: " & $iError & @CRLF & "Using center crop instead.")
         EndIf
 
         ; ---- fallback to center crop ----
@@ -1100,7 +1103,14 @@ Func _INetPost($sURL, $vData, $sContentType = "application/octet-stream", $sApiK
     Else
         ConsoleWrite("HTTP Error: " & $oHTTP.Status & " - " & $oHTTP.StatusText & @CRLF)
         ConsoleWrite("Response: " & $oHTTP.ResponseText & @CRLF)
-        Return SetError(6, $oHTTP.Status, "")
+        
+        ; Enhanced error classification based on HTTP status codes
+        ; API configuration errors (wrong key, endpoint, quota, etc.)
+        If $oHTTP.Status = 401 Or $oHTTP.Status = 403 Or $oHTTP.Status = 404 Or $oHTTP.Status = 429 Then
+            Return SetError(6, $oHTTP.Status, "") ; API configuration error
+        Else
+            Return SetError(7, $oHTTP.Status, "") ; Other HTTP error (network/server issues)
+        EndIf
     EndIf
 EndFunc   ;==>_INetPost
 
