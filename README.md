@@ -173,6 +173,11 @@ Quality = 85
    # Compile using AutoIt3 compiler
    Tools\autoit-v3\Aut2Exe\Aut2exe.exe /in Photo_Manager_Integrated.au3
    ```
+3. **Method 3: start-application.cmd** (Windows batch file)
+   ```batch
+   start-application.cmd
+   ```
+
 
 ### Basic Workflow
 
