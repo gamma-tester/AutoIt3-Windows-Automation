@@ -3,4 +3,4 @@ api-keys
 *.txt
 *.csv
 *.log
-config.file
+*.file
