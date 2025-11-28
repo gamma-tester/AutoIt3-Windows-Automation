@@ -1,2 +1,5 @@
 Tools
 api-keys
+*.txt
+*.csv
+*.log
